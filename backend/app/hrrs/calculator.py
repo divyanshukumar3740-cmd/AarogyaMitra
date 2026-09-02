@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from .factors import HRRSFactors, WEIGHTS
 from .thresholds import HRRSAction, determine_action
-from backend.app.safety.schemas import SafetyValidationResponse, RiskLevel
+from app.safety.schemas import SafetyValidationResponse, RiskLevel
 
 class HRRSResult(BaseModel):
     score: float
