@@ -1,0 +1,36 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import Optional, List
+import datetime
+
+app = FastAPI(
+    title="AarogyaMitra AI Core Backend",
+    description="Central orchestration layer for the AarogyaMitra AI ecosystem.",
+    version="0.1.0"
+)
+
+class ChatRequest(BaseModel):
+    channel: str
+    user_id: str
+    message: str
+    language: str = "en"
+    timestamp: str
+
+class ChatResponse(BaseModel):
+    message: str
+    intent: Optional[str] = None
+    confidence: Optional[float] = None
+    action: str
+    hrrs_score: Optional[int] = None
+    sources: Optional[List[str]] = []
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()}
+
+@app.post("/api/v1/chat/message", response_model=ChatResponse)
+async def process_chat_message(request: ChatRequest):
+    return ChatResponse(
+        message=f"Received on {request.channel}. AI engine integration pending.",
+        action="mock_response"
+    )
