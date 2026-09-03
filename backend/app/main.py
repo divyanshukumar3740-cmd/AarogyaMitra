@@ -2,12 +2,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional, List
 import datetime
+from app.database.connection import engine
+from app.models.learning import Base
 
 app = FastAPI(
     title="AarogyaMitra AI Core Backend",
     description="Central orchestration layer for the AarogyaMitra AI ecosystem.",
     version="0.1.0"
 )
+
+Base.metadata.create_all(bind=engine)
 
 class ChatRequest(BaseModel):
     channel: str
